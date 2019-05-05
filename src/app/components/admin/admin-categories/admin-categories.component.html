@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-10">
+    <h1>Manage Categories</h1>
+  </div>
+</div>
+<hr>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Slug</th>
+      <th style="width: 20%">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{category.id}}</td>
+      <td>{{category.category_name}}</td>
+      <td>{{category.category_slug}}</td>
+      <td>
+        <div class="row d-flex justify-content-around">
+          <button type="button" class="btn btn-info btn-sm" (click)="categoryDetail(category.category_slug)"
+            data-toggle="tooltip" data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i> Detail</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Sửa"
+            (click)="openModal(template)"><i class="fa fa-pencil-square-o"></i> Edit</button>
+          <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa"
+            (click)="confirmDeleteCategory(category)"><i class="fa fa-trash"></i> Delete</button>
+        </div>
+      </td>
+
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Edit</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #categoryEdit="ngForm" (ngSubmit)="submitEdit(category)">
+          <div class="modal-body">
+            <div class="container">
+              <!-- <div class="form-group d-flex justify-content-center">
+                <img src="http://localhost:8000/images/{{post.images[0].image}}" width="450px;" height="300px"
+                  *ngIf="post.images.length > 0">
+              </div> -->
+              <div class="form-group row">
+                <label for="inputCategoryName" class="col-sm-3 col-form-label">Category name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputCategoryName" #category_name="ngModel"
+                    name="category_name" [ngClass]="{ 'is-invalid': category_name.invalid&&category_name.touched }"
+                    [(ngModel)]="category.category_name" required>
+                  <div class="invalid-feedback" *ngIf="category_name.invalid&&category_name.touched">Category name field
+                    is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="categoryEdit.invalid">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+          </div>
+        </form>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

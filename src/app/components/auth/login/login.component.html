@@ -1,0 +1,69 @@
+<ng-container *ngIf="!isLoading; else loaded">
+  <section class="site-section pt-5 pb-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <h3>Login</h3>
+              <hr>
+              <div class="container">
+                <img src="assets/images/photo.png" class="rounded-circle mx-auto d-block mb-3" alt="...">
+                <form #loginForm="ngForm" (ngSubmit)="loginSubmit()">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                    </div>
+                    <input id="email" type="email" class="form-control" name="email" placeholder="Enten your email"
+                      [(ngModel)]="login_form.email" #emailFormControl="ngModel" required autofocus email
+                      [ngClass]="{ 'is-invalid': emailFormControl.invalid&&emailFormControl.touched }">
+                    <div class="invalid-feedback" *ngIf="emailFormControl.errors?.required&&emailFormControl.touched">
+                      Email field is required</div>
+                    <div class="invalid-feedback" *ngIf="emailFormControl.errors?.email&&emailFormControl.touched">Email
+                      field is invalid</div>
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    </div>
+                    <input id="password" type="password" class="form-control" placeholder="Enter your password"
+                      name="password" [(ngModel)]="login_form.password" #passwordFormControl="ngModel" required
+                      [ngClass]="{ 'is-invalid': passwordFormControl.invalid&&passwordFormControl.touched }">
+                    <div class="invalid-feedback"
+                      *ngIf="passwordFormControl.errors?.required&&passwordFormControl.touched">
+                      Password field is required</div>
+                  </div>
+
+                  <div class="form-group mb-1">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">
+                      Remember Me
+                    </label>
+                  </div>
+
+                  <div class="form-group row mb-0">
+                    <div class="col-md-5">
+                      <button type="submit" class="btn btn-primary btn-block" [disabled]="loginForm.invalid">
+                        Login
+                      </button>
+
+                    </div>
+                    <div class="col-md-7">
+                      <a href="#">
+                        <small>Forgot Your Password?</small>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+<ng-template #loaded>
+  <app-loading-page></app-loading-page>
+</ng-template>

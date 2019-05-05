@@ -1,0 +1,36 @@
+.box-part{
+    background:#FFF;
+    border-radius:10px;
+    padding:60px 10px;
+    margin:30px 0px;
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+
+.box-part:hover{
+    background:#4183D7;
+}
+
+.box-part:hover .fa , 
+.box-part:hover .title , 
+.box-part:hover .text ,
+.box-part:hover a{
+    color:#FFF;
+    -webkit-transition: all 1s ease-out;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+}
+
+.text{
+    margin:20px 0px;
+    color: black;
+}
+
+.fa{
+     color:#4183D7;
+}
+
+a:hover{
+    text-decoration: none
+}

@@ -1,0 +1,119 @@
+<section class="site-section pt-5 pb-5">
+  <div class="container">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <div class="card">
+            <div class="card-body">
+              <h3>User Information</h3>
+              <hr>
+              <form #registerForm="ngForm" (ngSubmit)="registerSubmit()">
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label for="name">Username</label>
+                    <input id="name" type="text" class="form-control" name="name" [(ngModel)]="register_form.name"
+                      [ngClass]="{ 'is-invalid': nameFormControl.invalid&&nameFormControl.touched }"
+                      #nameFormControl="ngModel" required autofocus>
+                    <div class=" invalid-feedback" *ngIf="nameFormControl.errors?.required&&nameFormControl.touched">
+                      Name field is required</div>
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" class="form-control" name="email" [(ngModel)]="register_form.email"
+                      [ngClass]="{ 'is-invalid': emailFormControl.invalid&&emailFormControl.touched }"
+                      #emailFormControl="ngModel" required email>
+                    <div class=" invalid-feedback" *ngIf="emailFormControl.errors?.required&&emailFormControl.touched">
+                      Email field is required</div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" class="form-control" name="password"
+                      [(ngModel)]="register_form.password" #passwordFormControl="ngModel" required
+                      [ngClass]="{ 'is-invalid': passwordFormControl.invalid&&passwordFormControl.touched }">
+                    <div class=" invalid-feedback"
+                      *ngIf="passwordFormControl.errors?.required&&passwordFormControl.touched">
+                      Password field is required</div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="password-confirm">Confirm Password</label>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                      [(ngModel)]="register_form.password_confirmation" #pass_confirmFormControl="ngModel" required
+                      [ngClass]="{ 'is-invalid': pass_confirmFormControl.invalid&&pass_confirmFormControl.touched }">
+                    <div class=" invalid-feedback"
+                      *ngIf="pass_confirmFormControl.errors?.required&&pass_confirmFormControl.touched">
+                      Confirm Password field is required</div>
+                  </div>
+                </div>
+                <hr>
+                <h3>Company</h3>
+                <hr>
+                <div class="form-group">
+                  <label for="company_name">Company Name</label>
+                  <input id="company_name" type="text" class="form-control" name="register_form.company_name" required
+                    [(ngModel)]="register_form.company_name" #CompanyNameFormControl="ngModel"
+                    [ngClass]="{ 'is-invalid': CompanyNameFormControl.invalid&&CompanyNameFormControl.touched }">
+                  <div class=" invalid-feedback"
+                    *ngIf="CompanyNameFormControl.errors?.required&&CompanyNameFormControl.touched">
+                    Company name is required</div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="phone_number">Phone Number</label>
+                    <input id="phone_number" type="text" class="form-control" name="phone_number" required
+                      [(ngModel)]="register_form.phone_number" #PhoneNumberFormControl="ngModel"
+                      [ngClass]="{ 'is-invalid': PhoneNumberFormControl.invalid&&PhoneNumberFormControl.touched }">
+                    <div class=" invalid-feedback"
+                      *ngIf="PhoneNumberFormControl.errors?.required&&PhoneNumberFormControl.touched">
+                      Phone number is required</div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="fax_number">Fax Number</label>
+                    <input id="fax_number" type="text" class="form-control" name="fax_number" required
+                      [(ngModel)]="register_form.fax_number" #FaxNumberFormControl="ngModel"
+                      [ngClass]="{ 'is-invalid': FaxNumberFormControl.invalid&&FaxNumberFormControl.touched }">
+                    <div class=" invalid-feedback"
+                      *ngIf="FaxNumberFormControl.errors?.required&&FaxNumberFormControl.touched">
+                      Fax number is required</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="address">Company Address</label>
+                  <input id="address" type="text" class="form-control" name="address" required
+                    [(ngModel)]="register_form.address" #addressFormControl="ngModel"
+                    [ngClass]="{ 'is-invalid': addressFormControl.invalid&&addressFormControl.touched }">
+                  <div class=" invalid-feedback"
+                    *ngIf="addressFormControl.errors?.required&&addressFormControl.touched">
+                    Address is required</div>
+                </div>
+                <div class="form-group">
+                  <label for="description">Company Description</label>
+                  <textarea id="description" type="text" class="form-control" name="description" rows="5"
+                    [(ngModel)]="register_form.description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="description">Company Website</label>
+                  <input id="website" type="text" class="form-control" name="website" [(ngModel)]="register_form.website_url">
+                </div>
+                <div class="form-group row mb-0">
+                  <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid">
+                      Register
+                    </button>
+                  </div>
+                  <div class="col-md-3">
+                    <button type="button" class="btn btn-light">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

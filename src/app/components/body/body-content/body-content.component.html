@@ -1,0 +1,57 @@
+<div class="row ml-2">
+  <h2 class="mb-4" *ngIf="!category">Latest Posts</h2>
+  <h2 class="mb-4" *ngIf="category">Category: {{category.category_name}}</h2>
+</div>
+<div class="row">
+  <ng-container *ngFor="let post of returnedArray">
+    <ng-container *ngIf="post.active == 1">
+      <div class="col-md-6" (click)="postDetail(post)">
+        <div class="blog-entry pointer">
+          <div class="blog-content-body">
+            <carousel [showIndicators]="false">
+              <ng-container *ngFor="let product of post.products">
+                <ng-container *ngFor="let img of product.images">
+                  <slide>
+                    <img [src]="img.imageUrl" style="display: block; width: 100%;">
+                  </slide>
+                </ng-container>
+              </ng-container>
+            </carousel>
+          </div>
+          <div class="blog-content-body" style="border-top: none">
+            <div class="post-meta">
+              <div class="container">
+                <h4>{{post.post_title}}</h4>
+                <div class="row mb-2">
+                  <div class="col-sm-2 d-flex justify-content-center">
+                    <span class="author mt-1"><img [src]="post.users.companies.logo_url" class="img-thumbnail img-fluid"
+                        alt="Colorlib">
+                    </span>
+                  </div>
+                  <div class="col-sm-10">
+                    <h4>{{post.users.companies.company_name}}</h4>
+                  </div>
+                </div>
+                <span><i class="fa fa-map-marker"></i> {{post.users.companies.address}}</span>
+                <br>
+                <span><i class="fa fa-phone"></i> {{post.users.user_phone}} -
+                  {{post.users.companies.phone_number}}</span>
+                <br>
+                <i class="fa fa-envelope"></i><span class="text-muted"> {{post.users.email}}</span>
+                <br>
+                <button class="btn btn-outline-info btn-sm mt-2">Detail...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<div class="row mt-5">
+  <div class="col-md-12 d-flex justify-content-center">
+    <pagination [totalItems]="posts.length" [itemsPerPage]="10" (pageChanged)="pageChanged($event)" class="paginate"
+      previousText="&lsaquo;" nextText="&rsaquo;" pageBtnClass="btn" class="pull-left">
+    </pagination>
+  </div>
+</div>

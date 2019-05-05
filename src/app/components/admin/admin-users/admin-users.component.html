@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-md-10">
+    <h1>Manage Users</h1>
+  </div>
+</div>
+<hr>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Company</th>
+      <th>Personal Phone</th>
+      <th>Company Phone</th>
+      <th>Role</th>
+      <th>Active</th>
+      <th style="width: 5%;">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.id}}</td>
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.companies.company_name}}</td>
+      <td>{{user.user_phone}}</td>
+      <td>{{user.companies.phone_number}}</td>
+      <td>{{user.role}}</td>
+      <td *ngIf="user.active == 1" class="text-center">
+        <span class="fa fa-check-circle"></span>
+      </td>
+      <td *ngIf="user.active == 0" class="text-center">
+        <span class="fa fa-times-circle"></span>
+      </td>
+      <td>
+        <div class="row d-flex justify-content-around">
+          <button type="button" class="btn btn-info btn-sm" (click)="userDetail(user.category_slug)"
+            data-toggle="tooltip" data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i>
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"
+            title="Sửa" (click)="openModal(template)"><i class="fa fa-pencil-square-o"></i></button>
+        </div>
+      </td>
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Edit users</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #userEdit="ngForm" (ngSubmit)="submitEdit(user)">
+          <div class="modal-body">
+            <div class="container">
+              <div class="form-group row">
+                <label for="inputProfileImage" class="col-sm-3 col-form-label">Profile image</label>
+                <div class="col-sm-9">
+                  <div class="row d-flex justify-content-center">
+                    <img src="assets/images/default-user.jpg" alt="User profile" class="rounded-circle"
+                      style="width: 100px; height: 100px;" *ngIf="userData.user.profileImg == null">
+                    <img [src]="userData.user.profileImg" alt="User profile" class="rounded-circle"
+                      *ngIf="userData.user.profileImg != null" style="width: 100px; height: 100px;">
+                  </div>
+                  <div class="custom-file mt-2">
+                    <input type="file" class="custom-file-input" id="image"
+                      (change)="onSelectFile($event, userData.user)">
+                    <label class="custom-file-label" for="image" data-browse="Open">Choose
+                      file</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputUserName" class="col-sm-3 col-form-label">Username</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputName" #name="ngModel" name="name"
+                    [ngClass]="{ 'is-invalid': name.invalid&&name.touched }" [(ngModel)]="userData.user.name" required>
+                  <div class="invalid-feedback" *ngIf="name.invalid&&name.touched">Username field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputUserEmail" class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputUserEmail" #email="ngModel" name="email"
+                    [ngClass]="{ 'is-invalid': email.invalid&&email.touched }" [(ngModel)]="userData.user.email"
+                    required>
+                  <div class="invalid-feedback" *ngIf="email.invalid&&email.touched">Email field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputUserPhone" class="col-sm-3 col-form-label">Personal Phone No.</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" id="inputUserPhone" #userPhone="ngModel" name="userPhone"
+                    [ngClass]="{ 'is-invalid': userPhone.invalid&&userPhone.touched }"
+                    [(ngModel)]="userData.user.user_phone" required>
+                  <div class="invalid-feedback" *ngIf="userPhone.invalid&&userPhone.touched">Personal phone number field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputUseRole" class="col-sm-3 col-form-label">Role</label>
+                <div class="col-sm-9">
+                  <select name="role" class="form-control" [(ngModel)]="userData.user.role">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputProfileImage" class="col-sm-3 col-form-label">Company Logo</label>
+                <div class="col-sm-9">
+                  <div class="row d-flex justify-content-center">
+                    <img src="assets/images/default-logo.png" alt="User profile" class="rounded-circle"
+                      style="width: 100px; height: 100px;" *ngIf="userData.company.logo_url == null">
+                    <img [src]="userData.company.logo_url" alt="User profile" class="rounded-circle"
+                      *ngIf="userData.company.logo_url != null" style="width: 100px; height: 100px;">
+                  </div>
+                  <div class="custom-file mt-2">
+                    <input type="file" class="custom-file-input" id="image"
+                      (change)="onChangeLogo($event, userData.company)">
+                    <label class="custom-file-label" for="image" data-browse="Open">Choose
+                      file</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputCompanyName" class="col-sm-3 col-form-label">Company</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputCompany" #company="ngModel" name="company_name"
+                    [ngClass]="{ 'is-invalid': company.invalid&&company.touched }"
+                    [(ngModel)]="userData.company.company_name" required>
+                  <div class="invalid-feedback" *ngIf="company.invalid&&company.touched">Company name field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputPhoneNo" class="col-sm-3 col-form-label">Phone No.</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" id="inputPhone" #phone="ngModel" name="phone"
+                    [ngClass]="{ 'is-invalid': phone.invalid&&phone.touched }"
+                    [(ngModel)]="userData.company.phone_number" required>
+                  <div class="invalid-feedback" *ngIf="phone.invalid&&phone.touched">Phone number field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputFaxNo" class="col-sm-3 col-form-label">Fax No.</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" id="inputPhone" #fax="ngModel" name="fax"
+                    [ngClass]="{ 'is-invalid': fax.invalid&&fax.touched }" [(ngModel)]="userData.company.fax_number"
+                    required>
+                  <div class="invalid-feedback" *ngIf="fax.invalid&&fax.touched">Fax number field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputAddress" class="col-sm-3 col-form-label">Address</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputPhone" #address="ngModel" name="address"
+                    [ngClass]="{ 'is-invalid': address.invalid&&address.touched }"
+                    [(ngModel)]="userData.company.address" required>
+                  <div class="invalid-feedback" *ngIf="address.invalid&&address.touched">Address field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <label for="inputContent" class="col-form-label">Desciption</label>
+                </div>
+                <div class="col-sm-9">
+                  <ckeditor tagName="textarea" [editor]="Editor" name="description"
+                    [(ngModel)]="userData.company.description"
+                    [ngClass]="{ 'is-invalid': description.invalid&&description.touched }" #description="ngModel"
+                    required>
+                  </ckeditor>
+                  <div class="invalid-feedback" *ngIf="description.invalid&&description.touched">Description field is
+                    required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputCompanyWebsite" class="col-sm-3 col-form-label">Website</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputCompanyWebsite" #website="ngModel" name="website"
+                    [ngClass]="{ 'is-invalid': website.invalid&&website.touched }"
+                    [(ngModel)]="userData.company.website_url" required>
+                  <div class="invalid-feedback" *ngIf="website.invalid&&website.touched">Website url field
+                    is required</div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <label for="inputActive" class="col-form-label">Active</label>
+                </div>
+                <div class="col-sm-9">
+                  <input type="radio" name="active" [(ngModel)]="userData.user.active" [value]="1" class="pointer">
+                  Activate
+                  <br>
+                  <input type="radio" name="active" [(ngModel)]="userData.user.active" [value]="0" class="pointer">
+                  Deactivate
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" [disabled]="userEdit.invalid">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+          </div>
+        </form>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

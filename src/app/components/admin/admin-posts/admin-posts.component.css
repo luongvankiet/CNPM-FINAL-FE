@@ -1,0 +1,194 @@
+
+.carousel-item {
+    margin-right: 0;
+}
+
+.carousel-inner .active,
+.carousel-inner .active + .carousel-item,
+.carousel-inner .active + .carousel-item + .carousel-item {
+    display: block;
+}
+
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+.carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+    transition: none;
+}
+
+.carousel-inner .carousel-item-next {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+}
+
+.carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: absolute;
+    top: 0;
+    right: -33.3333%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+}
+
+/* left or forward direction */
+.active.carousel-item-left + .carousel-item-next.carousel-item-left,
+.carousel-item-next.carousel-item-left + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+.carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+}
+
+/* farthest right hidden item must be abso position for animations */
+.carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+}
+
+/* right or prev direction */
+.active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+.carousel-item-prev.carousel-item-right + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+.carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+}
+
+.carousel-control-prev, .carousel-control-next{
+    width: 10%
+}
+
+#post-content{
+    display: inline-block;
+    height: 100px;
+    width: 98%;
+    overflow: auto;
+    text-align: justify;
+}
+
+
+[class^='imghvr-'], [class*=' imghvr-'] {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    max-width: 100%;
+    background-color: #2266a5;
+    color: #fff;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+[class^='imghvr-'] > img, [class*=' imghvr-'] > img {
+    vertical-align: top;
+    max-width: 100%;
+}
+
+[class^='imghvr-'] figcaption, [class*=' imghvr-'] figcaption {
+    position: absolute;
+    top: 30%;
+    bottom: 0;
+    left: 25%;
+    right: 25%;
+    color: #ffffff;
+}
+
+[class^='imghvr-'] figcaption h1, [class^='imghvr-'] figcaption h2, [class^='imghvr-'] figcaption h3, [class^='imghvr-'] figcaption h4, [class^='imghvr-'] figcaption h5, [class^='imghvr-'] figcaption h6, [class*=' imghvr-'] figcaption h1, [class*=' imghvr-'] figcaption h2, [class*=' imghvr-'] figcaption h3, [class*=' imghvr-'] figcaption h4, [class*=' imghvr-'] figcaption h5, [class*=' imghvr-'] figcaption h6 {
+    color: #ffffff;
+}
+
+[class^='imghvr-'] a, [class*=' imghvr-'] a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+[class^='imghvr-'], [class*=' imghvr-'], [class^='imghvr-']:before,
+[class^='imghvr-']:after, [class*=' imghvr-']:before, [class*=' imghvr-']:after,
+[class^='imghvr-'] *, [class*=' imghvr-'] *, [class^='imghvr-'] *:before,
+[class^='imghvr-'] *:after, [class*=' imghvr-'] *:before, [class*=' imghvr-'] *:after {
+    box-sizing: border-box;
+    -webkit-transition: all 0.35s ease;
+    -moz-transition: all 0.35s ease;
+    transition: all 0.35s ease;
+}
+
+/* imghvr-fade-*
+   ----------------------------- */
+[class^='imghvr-fade'] figcaption, [class*=' imghvr-fade'] figcaption {
+    opacity: 0;
+}
+
+[class^='imghvr-fade']:hover > img, [class*=' imghvr-fade']:hover > img {
+    opacity: 0;
+}
+
+[class^='imghvr-fade']:hover figcaption, [class*=' imghvr-fade']:hover figcaption {
+    opacity: 1;
+}
+
+[class^='imghvr-fade']:hover > img, [class^='imghvr-fade']:hover figcaption, [class*=' imghvr-fade']:hover > img, [class*=' imghvr-fade']:hover figcaption {
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+/* imghvr-fade
+   ----------------------------- */
+/* imghvr-fade-in-up
+   ----------------------------- */
+.imghvr-fade-in-up figcaption {
+    -webkit-transform: translate(0, 15%);
+    -moz-transform: translate(0, 15%);
+    -ms-transform: translate(0, 15%);
+    -o-transform: translate(0, 15%);
+    transform: translate(0, 15%);
+}
+
+/* imghvr-fade-in-down
+   ----------------------------- */
+.imghvr-fade-in-down figcaption {
+    -webkit-transform: translate(0, -15%);
+    -moz-transform: translate(0, -15%);
+    -ms-transform: translate(0, -15%);
+    -o-transform: translate(0, -15%);
+    transform: translate(0, -15%);
+}
+
+/* imghvr-fade-in-left
+   ----------------------------- */
+.imghvr-fade-in-left figcaption {
+    -webkit-transform: translate(-15%, 0);
+    -moz-transform: translate(-15%, 0);
+    -ms-transform: translate(-15%, 0);
+    -o-transform: translate(-15%, 0);
+    transform: translate(-15%, 0);
+}
+
+/* imghvr-fade-in-right
+   ----------------------------- */
+.imghvr-fade-in-right figcaption {
+    -webkit-transform: translate(15%, 0);
+    -moz-transform: translate(15%, 0);
+    -ms-transform: translate(15%, 0);
+    -o-transform: translate(15%, 0);
+    transform: translate(15%, 0);
+}

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>FinalProject</title>
@@ -7,8 +8,57 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="./assets/css/bootstrap.css">
+  <link rel="stylesheet" href="./assets/css/animate.css">
+  <link rel="stylesheet" href="./assets/css/admin.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/fonts/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="./assets/fonts/fontawesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./assets/fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
+
 <body>
   <app-root></app-root>
+  <script type="text/javascript" src="./assets/js/jquery.min.js"></script>
+  <script type="text/javascript" src="./assets/js/popper.min.js"></script>
+  <script type="text/javascript" src="./assets/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery-migrate-3.0.0.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery.stellar.min.js"></script>
+  <script type="text/javascript" src="./assets/js/jquery.waypoints.min.js"></script>
+  <script type="text/javascript" src="./assets/js/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="./assets/js/admin.js"></script>
+  <script type="text/javascript" src="./assets/js/main.js"></script>
+  <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#myTable').DataTable();
+    });
+  </script>
+
+  <script>
+    $('#recipeCarousel').carousel({
+      interval: 10000
+    })
+
+    $('.carousel .carousel-item').each(function () {
+      var next = $(this).next();
+      if (!next.length) {
+        next = $(this).siblings(':first');
+      }
+      next.children(':first-child').clone().appendTo($(this));
+
+      if (next.next().length > 0) {
+        next.next().children(':first-child').clone().appendTo($(this));
+      }
+      else {
+        $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+      }
+    });
+
+    var elmnt = document.getElementById("content");
+  </script>
 </body>
+
 </html>

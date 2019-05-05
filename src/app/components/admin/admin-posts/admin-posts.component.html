@@ -1,0 +1,291 @@
+<div class="row">
+  <div class="col-md-10">
+    <h1 *ngIf="!category && !user">Manage Posts</h1>
+    <h1 *ngIf="category&&!user">Category: {{category.category_name}}</h1>
+    <div *ngIf="!category&&user">
+      <h1>Company: {{user.companies.company_name}}</h1>
+    </div>
+  </div>
+</div>
+<hr>
+<!-- Table of post -->
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+  <thead>
+    <tr>
+      <th style="width: 5%;">ID</th>
+      <th style="width: 20%;">Title</th>
+      <th style="width: 60%;">Content</th>
+      <th style="width: 20%;">Company</th>
+      <th>Active</th>
+    </tr>
+  </thead>
+  <!-- End of table header -->
+  <tbody>
+    <tr *ngFor="let post of posts" class="pointer" (click)="openModal(template, post)">
+      <td>{{post.id}}</td>
+      <td>{{post.post_title}}</td>
+      <td [innerHtml]="post.post_content" id="post-content"></td>
+      <td>{{post.users.companies.company_name}}</td>
+      <td *ngIf="post.active == 1" class="text-center">
+        <span class="fa fa-check-circle"></span>
+      </td>
+      <td *ngIf="post.active == 0" class="text-center">
+        <span class="fa fa-times-circle"></span>
+      </td>
+
+      <!-- Edit post modal -->
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">{{post.post_title}}</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form #postEdit="ngForm" (ngSubmit)="submitEdit(post)">
+          <div class="modal-body">
+            <div class="container">
+              <div class="form-group row">
+                <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="inputTitle" #title="ngModel" name="title"
+                    [ngClass]="{ 'is-invalid': title.invalid&&title.touched }" [(ngModel)]="post.post_title" required>
+                  <div class="invalid-feedback" *ngIf="title.invalid&&title.touched">Title field is required</div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <label for="inputContent" class="col-form-label">Content</label>
+                </div>
+                <div class="col-sm-9">
+                  <ckeditor tagName="textarea" [editor]="Editor" name="content" [(ngModel)]="post.post_content"
+                    [ngClass]="{ 'is-invalid': content.invalid&&content.touched }" #content="ngModel" required>
+                  </ckeditor>
+                  <div class="invalid-feedback" *ngIf="content.invalid&&content.touched">Content field is required</div>
+                </div>
+              </div>
+              <div class=" form-group row">
+                <div class="col-sm-3">
+                  <p>Owner</p>
+                </div>
+                <div class="col-sm-9">
+                  <p>{{post.users.name}}</p>
+                </div>
+              </div>
+              <div class=" form-group row">
+                <div class="col-sm-3">
+                  Owner Email
+                </div>
+                <div class="col-sm-9">
+                  <p>{{post.users.email}}</p>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputCategory" class="col-sm-3 col-form-label">Category</label>
+                <div class="col-sm-9">
+                  <select name="category_id" class="form-control" [ngModel]="post.category_id"
+                    (change)="showInputForm($event.target.value, post)">
+                    <option *ngFor="let category of categories" [value]="category.id">{{category.category_name}}
+                    </option>
+                    <hr>
+                    <option value="other">Other</option>
+                  </select>
+                  <div class="mt-2" *ngIf="showInput">
+                    <input type="text" name="other" class="form-control" [(ngModel)]="postEditForm.category_name"
+                      placeholder="Input category name" autofocus #category_name="ngModel" required
+                      [ngClass]="{ 'is-invalid': category_name.invalid&&category_name.touched }">
+                    <div class="invalid-feedback" *ngIf="category_name.invalid&&category_name.touched">Category field
+                      is
+                      required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputCategory" class="col-sm-3 col-form-label">Products</label>
+                <div class="col-sm-9">
+                  <!-- <input type="text" class="form-control-plaintext" id="inputCategory"
+                    [(ngModel)]="post.categories.category_name"> -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Unit price</th>
+                        <th>Unit</th>
+                        <th style="width: 15%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of products">
+                        <td>{{product.product_name}}</td>
+                        <td>{{product.price | number}} VND</td>
+                        <td>{{product.unit}}</td>
+                        <td>
+                          <div class="row d-flex justify-content-around">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                              (click)="openModal2(template2, product.images)"><i
+                                class="fa fa-pencil-square-o"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm"
+                              (click)="confirmDeleteProduct(product, products)"><i class="fa fa-trash"></i></button>
+                          </div>
+                        </td>
+
+                        <!-- Edit product in specific post modal -->
+                        <ng-template #template2>
+                          <div class="modal-header">
+                            <h4 class="modal-title pull-left">Edit {{product.product_name}}</h4>
+                            <button type="button" class="close pull-right" aria-label="Close"
+                              (click)="modalRef2.hide()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form #productEdit="ngForm" (ngSubmit)="editProduct(product)">
+                            <div class="modal-body">
+                              <div class="container">
+                                <div class="form-group row">
+                                  <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                                    <div class="carousel-inner" role="listbox">
+                                      <ng-container *ngFor="let img of images">
+                                        <div class="carousel-item col-4" [ngClass]="{'active': img == images[0]}">
+                                          <figure class="imghvr-fade">
+                                            <img class="img-fluid" style="height: 100px;" [src]="img.imageUrl">
+                                            <figcaption>
+                                              <div class="row">
+                                                <button type="button" class="btn btn-secondary ml-1"
+                                                  style="width: 40px;" (click)="updateProductImage.click()"><i
+                                                    class="fa fa-pencil-square-o"></i></button>
+                                                <input type="file" #updateProductImage
+                                                  (change)="onUpdateProductImage($event, img)" style="display: none">
+                                                <button type="button" class="btn btn-danger ml-1"
+                                                  (click)="confirmRemoveImg(img, images)"><i
+                                                    class="fa fa-trash"></i></button>
+                                              </div>
+                                            </figcaption>
+                                          </figure>
+                                        </div>
+                                      </ng-container>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#recipeCarousel" role="button"
+                                      data-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#recipeCarousel" role="button"
+                                      data-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                    </a>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputFile" class="col-sm-3 col-form-label">Choose file</label>
+                                  <div class="col-sm-9">
+                                    <div class="custom-file">
+                                      <input type="file" class="custom-file-input" id="image"
+                                        (change)="onSelectFile($event, product.id)">
+                                      <label class="custom-file-label" for="image" data-browse="Open">Choose
+                                        file</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputProductName" class="col-sm-3 col-form-label">Name</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="inputProductName" #productName="ngModel"
+                                      name="productName"
+                                      [ngClass]="{ 'is-invalid': productName.invalid&&productName.touched }"
+                                      [(ngModel)]="product.product_name" required>
+                                    <div class="invalid-feedback" *ngIf="productName.invalid&&productName.touched">
+                                      Name
+                                      field is
+                                      required</div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputPrice" class="col-sm-3 col-form-label">Unit price</label>
+                                  <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="inputPrice" #productPrice="ngModel"
+                                      name="productPrice"
+                                      [ngClass]="{ 'is-invalid': productPrice.invalid&&productPrice.touched }"
+                                      [(ngModel)]="product.price" required>
+                                    <div class="invalid-feedback" *ngIf="productPrice.invalid&&productPrice.touched">
+                                      Unit price field is required</div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="inputPrice" class="col-sm-3 col-form-label">Unit</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="inputUnit" #productUnit="ngModel"
+                                      name="productUnit"
+                                      [ngClass]="{ 'is-invalid': productUnit.invalid&&productUnit.touched }"
+                                      [(ngModel)]="product.unit" required>
+                                    <div class="invalid-feedback" *ngIf="productUnit.invalid&&productUnit.touched">
+                                      Unit field is required
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary"
+                                [disabled]="productEdit.invalid">Submit</button>
+                              <button type="button" class="btn btn-default" (click)="modalRef2.hide()">Close</button>
+                            </div>
+                          </form>
+                        </ng-template>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="text" name="newProductName" class="form-control" placeholder="Input name"
+                            required [(ngModel)]="newProduct.product_name" #NewProductName="ngModel"
+                            [ngClass]="{ 'is-invalid': NewProductName.invalid&&NewProductName.dirty }">
+                          <div class="invalid-feedback" *ngIf="NewProductName.invalid&&NewProductName.dirty">
+                            Name field is required
+                          </div>
+                        </td>
+                        <td><input type="number" name="newProductPrice" class="form-control" placeholder="Input price"
+                            required [(ngModel)]="newProduct.price" #NewProductPrice="ngModel"
+                            [ngClass]="{ 'is-invalid': NewProductPrice.invalid&&NewProductPrice.dirty }">
+                          <div class="invalid-feedback" *ngIf="NewProductPrice.invalid&&NewProductPrice.dirty">
+                            Unit price field is required
+                          </div>
+                        </td>
+                        <td>
+                          <input type="text" name="newProductUnit" class="form-control" placeholder="Input unit"
+                            required [(ngModel)]="newProduct.unit" #NewProductUnit="ngModel"
+                            [ngClass]="{ 'is-invalid': NewProductUnit.invalid&&NewProductUnit.dirty }">
+                          <div class="invalid-feedback" *ngIf="NewProductUnit.invalid&&NewProductUnit.dirty">
+                            Unit field is required
+                          </div>
+                        </td>
+                        <td><button type="button" class="btn btn-primary btn-block"
+                            (click)="createProduct()">Add</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-3">
+                  <label for="inputContent" class="col-form-label">Active</label>
+                </div>
+                <div class="col-sm-9">
+                  <input type="radio" name="active" [(ngModel)]="post.active" [value]="1" class="pointer"> Activate
+                  <br>
+                  <input type="radio" name="active" [(ngModel)]="post.active" [value]="0" class="pointer"> Deactivate
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+          </div>
+        </form>
+      </ng-template>
+      <!-- End of edit modal -->
+    </tr>
+  </tbody>
+  <!-- End of table body -->
+</table>
+<!-- End of table -->
+

@@ -16,6 +16,7 @@ import { BodyContentComponent } from './components/body/body-content/body-conten
 import { BodyPostDetailComponent } from './components/body/body-post-detail/body-post-detail.component';
 import { BodyCreatePostComponent } from './components/body/body-create-post/body-create-post.component';
 import { BodyContactComponent } from './components/body/body-contact/body-contact.component';
+import { BodyProfileDetailComponent } from './components/body/body-profile-detail/body-profile-detail.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,8 @@ const routes: Routes = [
           { path: 'posts/:post_slug', component: BodyPostDetailComponent },
           { path: 'categories/:category_slug', component: BodyContentComponent },
           { path: 'contact', component: BodyContactComponent },
+          { path: 'profile', component: BodyProfileDetailComponent },
+          { path: 'profile/:id', component: BodyProfileDetailComponent },
         ]
       },
       { path: 'login', component: LoginComponent },

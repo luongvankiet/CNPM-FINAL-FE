@@ -30,4 +30,7 @@ export class PostService {
     return this._http.get(`${this._apiUrl}/posts/${slug}`);
   }
 
+  deletePost(id){
+    return this._http.delete(`${this._apiUrl}/posts/${id}`);
+  }
 }

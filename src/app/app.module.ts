@@ -34,6 +34,7 @@ import { BodyPostDetailComponent } from './components/body/body-post-detail/body
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BodyCreatePostComponent } from './components/body/body-create-post/body-create-post.component';
 import { BodyContactComponent } from './components/body/body-contact/body-contact.component';
+import { BodyProfileDetailComponent } from './components/body/body-profile-detail/body-profile-detail.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { BodyContactComponent } from './components/body/body-contact/body-contac
     BodyPostDetailComponent,
     BodyCreatePostComponent,
     BodyContactComponent,
+    BodyProfileDetailComponent,
   ],
   imports: [
     BrowserModule,

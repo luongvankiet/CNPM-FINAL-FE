@@ -1,0 +1,7 @@
+.company-info{
+    color: black
+}
+.company-info:hover{
+    color: grey;
+    text-decoration: none;
+}

@@ -35,11 +35,11 @@
       </td>
       <td>
         <div class="row d-flex justify-content-around">
-          <button type="button" class="btn btn-info btn-sm" (click)="userDetail(user.category_slug)"
-            data-toggle="tooltip" data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i>
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"
-            title="Sửa" (click)="openModal(template)"><i class="fa fa-pencil-square-o"></i></button>
+          <a role="button" class="btn btn-info btn-sm" routerLink="{{user.id}}" data-toggle="tooltip"
+            data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i>
+          </a>
+          <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Sửa"
+            (click)="openModal(template, user)"><i class="fa fa-pencil-square-o"></i></button>
         </div>
       </td>
       <ng-template #template>

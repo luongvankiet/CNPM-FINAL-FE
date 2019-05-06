@@ -12,10 +12,10 @@
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
-      <th style="width: 5%;">ID</th>
-      <th style="width: 20%;">Title</th>
-      <th style="width: 60%;">Content</th>
-      <th style="width: 20%;">Company</th>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Company</th>
+      <th>Products</th>
       <th>Active</th>
     </tr>
   </thead>
@@ -24,8 +24,12 @@
     <tr *ngFor="let post of posts" class="pointer" (click)="openModal(template, post)">
       <td>{{post.id}}</td>
       <td>{{post.post_title}}</td>
-      <td [innerHtml]="post.post_content" id="post-content"></td>
       <td>{{post.users.companies.company_name}}</td>
+      <td>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let product of post.products">{{product.product_name}}</li>
+        </ul>
+      </td>
       <td *ngIf="post.active == 1" class="text-center">
         <span class="fa fa-check-circle"></span>
       </td>
@@ -288,4 +292,3 @@
   <!-- End of table body -->
 </table>
 <!-- End of table -->
-

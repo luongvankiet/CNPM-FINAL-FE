@@ -2,6 +2,40 @@
   <div class="col-md-10">
     <h1>Manage Categories</h1>
   </div>
+  <div class="col-md-2 mt-3">
+    <button type="button" class="btn btn-outline-info btn-block" (click)="openModal2(template2)">Create new
+      category</button>
+    <ng-template #template2>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Create new category</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef2.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #categoryCreate="ngForm" (ngSubmit)="submitCreate(categoryCreate)">
+        <div class="modal-body">
+          <div class="container">
+            <div class="form-group row">
+              <label for="inputCategoryName" class="col-sm-3 col-form-label">Category name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="inputCategoryName" #name="ngModel"
+                  name="name" [ngClass]="{ 'is-invalid': name.invalid&&name.touched }"
+                  [(ngModel)]="newCategory.category_name" required>
+                <div class="invalid-feedback" *ngIf="name.invalid&&name.touched">Category name field
+                  is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" [disabled]="categoryCreate.invalid">Submit</button>
+          <button type="button" class="btn btn-default" (click)="modalRef2.hide()">Close</button>
+        </div>
+        </form>
+      </div>
+    </ng-template>
+  </div>
 </div>
 <hr>
 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
@@ -21,7 +55,8 @@
       <td>
         <div class="row d-flex justify-content-around">
           <button type="button" class="btn btn-info btn-sm" (click)="categoryDetail(category.category_slug)"
-            data-toggle="tooltip" data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i> Detail</button>
+            data-toggle="tooltip" data-placement="top" title="Chi tiết"><i class="fa fa-info-circle"></i>
+            Detail</button>
           <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Sửa"
             (click)="openModal(template)"><i class="fa fa-pencil-square-o"></i> Edit</button>
           <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Xóa"
@@ -39,10 +74,6 @@
         <form #categoryEdit="ngForm" (ngSubmit)="submitEdit(category)">
           <div class="modal-body">
             <div class="container">
-              <!-- <div class="form-group d-flex justify-content-center">
-                <img src="http://localhost:8000/images/{{post.images[0].image}}" width="450px;" height="300px"
-                  *ngIf="post.images.length > 0">
-              </div> -->
               <div class="form-group row">
                 <label for="inputCategoryName" class="col-sm-3 col-form-label">Category name</label>
                 <div class="col-sm-9">

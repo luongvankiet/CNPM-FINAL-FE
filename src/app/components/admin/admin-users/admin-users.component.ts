@@ -25,7 +25,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _modalService: BsModalService,
-    private _snotifyService: SnotifyService
+    private _snotifyService: SnotifyService,
   ) { }
 
   ngOnInit() {

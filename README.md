@@ -1,3 +1,7 @@
+#Author
+Luong Van Kiet - 51503059
+Lieu Dung Tri - 51503140
+
 # FinalProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.

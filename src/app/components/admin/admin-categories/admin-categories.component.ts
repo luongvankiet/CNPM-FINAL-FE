@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { SnotifyService } from 'ng-snotify';
 import { DataTableDirective } from 'angular-datatables';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-categories',
@@ -13,11 +14,15 @@ import { DataTableDirective } from 'angular-datatables';
 })
 export class AdminCategoriesComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
+  modalRef2: BsModalRef;
   public categories;
   dtTrigger: Subject<any> = new Subject();
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
+  public newCategory = {
+    category_name: null
+  }
   constructor(
     private _categoryService: CategoryService,
     private _router: Router,
@@ -58,6 +63,13 @@ export class AdminCategoriesComponent implements OnInit, OnDestroy {
     );
   }
 
+  openModal2(template: TemplateRef<any>) {
+    this.modalRef2 = this._modalService.show(
+      template,
+      Object.assign({}, { class: 'gray modal-lg' }),
+    );
+  }
+
   submitEdit(category) {
     this._categoryService.editCategory(category).subscribe(
       data => {
@@ -67,6 +79,20 @@ export class AdminCategoriesComponent implements OnInit, OnDestroy {
       },
       error => {
         this._snotifyService.error("Chỉnh sửa thất bại!", "Error");
+      }
+    )
+  }
+
+  submitCreate(form: NgForm){
+    this._categoryService.createCategory(this.newCategory).subscribe(
+      data => {
+        this._snotifyService.success('Tạo thể loại mới thành công', 'Success');
+        this.rerender();
+        this.modalRef2.hide();
+        form.reset();
+      },
+      error => {
+        this._snotifyService.error("Đã xảy ra lỗi! Vui lòng thử lại", "Error");
       }
     )
   }

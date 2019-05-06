@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { PostService } from 'src/app/services/post/post.service';
 import { AuthService } from 'src/app/services/auth/auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-body-sidebar',
@@ -16,7 +17,8 @@ export class BodySidebarComponent implements OnInit {
   constructor(
     private _categoryService: CategoryService,
     private _authService: AuthService,
-    private _postService: PostService
+    private _postService: PostService,
+    private _route: ActivatedRoute
   ) { }
 
   ngOnInit() {

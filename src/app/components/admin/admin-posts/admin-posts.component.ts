@@ -341,4 +341,32 @@ export class AdminPostsComponent implements OnInit {
       }
     }
   }
+
+  confirmDeletePost(post, posts){
+    this._snotifyService.confirm("Xác nhận xóa!", "Confirm", {
+      timeout: 5000,
+      showProgressBar: true,
+      buttons: [
+        {
+          text: 'Confirm', action: (toast) => { this.deletePost(post, posts); this._snotifyService.remove(toast.id); }
+        },
+        { text: 'Cancel', action: (toast) => { this._snotifyService.remove(toast.id); } },
+      ]
+    })
+  }
+
+  deletePost(post, posts){
+    this._postService.deletePost(post.id).subscribe(
+      data => {
+        this._snotifyService.success('Xóa thành công!', 'Success');
+        let index = posts.indexOf(post);
+        if (index !== -1) {
+          posts.splice(index, 1);
+        }
+      },
+      error => {
+        this._snotifyService.error('Xóa thất bại! Xin vui lòng kiểm tra lại thông tin', 'Error');
+      }
+    )
+  }
 }

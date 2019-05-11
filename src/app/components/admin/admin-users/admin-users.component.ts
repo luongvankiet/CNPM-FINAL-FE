@@ -80,7 +80,7 @@ export class AdminUsersComponent implements OnInit {
 
   submitEdit(user) {
     this._userService.updateUser(this.userData.user).subscribe(
-      data => { 
+      data => {
         user = data;
       }
     )
@@ -89,6 +89,34 @@ export class AdminUsersComponent implements OnInit {
         user.companies = data;
         this._snotifyService.success("Cập nhật thành công", "Success");
         this.modalRef.hide();
+      }
+    )
+  }
+
+  confirmDeleteUser(user, users) {
+    this._snotifyService.confirm("Xác nhận xóa!", "Confirm", {
+      timeout: 5000,
+      showProgressBar: true,
+      buttons: [
+        {
+          text: 'Confirm', action: (toast) => { this.deleteUser(user, users); this._snotifyService.remove(toast.id); }
+        },
+        { text: 'Cancel', action: (toast) => { this._snotifyService.remove(toast.id); } },
+      ]
+    });
+  }
+
+  deleteUser(user, users) {
+    this._userService.deleteUser(user.id).subscribe(
+      data => {
+        this._snotifyService.success('Xóa thành công!', 'Success');
+        let index = users.indexOf(user);
+        if (index !== -1) {
+          users.splice(index, 1);
+        }
+      },
+      error => {
+        this._snotifyService.error('Xóa thất bại! Xin vui lòng kiểm tra lại thông tin', 'Error');
       }
     )
   }

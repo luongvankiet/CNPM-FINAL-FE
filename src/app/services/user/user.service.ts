@@ -26,4 +26,8 @@ export class UserService {
   getUserById(id){
     return this._http.get(`${this._apiUrl}/users/${id}`);
   }
+  
+  deleteUser(id){
+    return this._http.delete(`${this._apiUrl}/users/${id}`);
+  }
 }

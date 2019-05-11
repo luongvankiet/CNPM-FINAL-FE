@@ -94,7 +94,7 @@
               <div class="form-group row">
                 <label for="inputUserPhone" class="col-sm-3 col-form-label">Personal Phone No.</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control" id="inputUserPhone" #userPhone="ngModel" name="userPhone"
+                  <input type="text" class="form-control" id="inputUserPhone" #userPhone="ngModel" name="userPhone"
                     [ngClass]="{ 'is-invalid': userPhone.invalid&&userPhone.touched }"
                     [(ngModel)]="userData.user.user_phone" required>
                   <div class="invalid-feedback" *ngIf="userPhone.invalid&&userPhone.touched">Personal phone number field
@@ -144,7 +144,7 @@
               <div class="form-group row">
                 <label for="inputPhoneNo" class="col-sm-3 col-form-label">Phone No.</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control" id="inputPhone" #phone="ngModel" name="phone"
+                  <input type="text" class="form-control" id="inputPhone" #phone="ngModel" name="phone"
                     [ngClass]="{ 'is-invalid': phone.invalid&&phone.touched }"
                     [(ngModel)]="userData.company.phone_number" required>
                   <div class="invalid-feedback" *ngIf="phone.invalid&&phone.touched">Phone number field
@@ -155,7 +155,7 @@
               <div class="form-group row">
                 <label for="inputFaxNo" class="col-sm-3 col-form-label">Fax No.</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control" id="inputPhone" #fax="ngModel" name="fax"
+                  <input type="text" class="form-control" id="inputPhone" #fax="ngModel" name="fax"
                     [ngClass]="{ 'is-invalid': fax.invalid&&fax.touched }" [(ngModel)]="userData.company.fax_number"
                     required>
                   <div class="invalid-feedback" *ngIf="fax.invalid&&fax.touched">Fax number field
@@ -214,9 +214,18 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" [disabled]="userEdit.invalid">Submit</button>
-            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+          <hr>
+          <div class="container mb-3">
+            <div class="row">
+              <div class="col-4">
+                <button type="button" class="btn btn-danger"
+                  (click)="confirmDeleteUser(user, users); modalRef.hide()">Delete</button>
+              </div>
+              <div class="col-8 text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="userEdit.invalid">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+              </div>
+            </div>
           </div>
         </form>
       </ng-template>

@@ -280,9 +280,17 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+          <hr>
+          <div class="container">
+            <div class="row d-flex justify-content-around mb-3">
+              <div class="col-4">
+                <button type="button" class="btn btn-danger" (click)="confirmDeletePost(post, posts); modalRef.hide()">Delete</button>
+              </div>
+              <div class="col-8 text-right">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+              </div>
+            </div>
           </div>
         </form>
       </ng-template>
